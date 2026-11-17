@@ -69,5 +69,5 @@
 <text x="660" y="743" font-size="19" font-weight="500" fill="#8e8e93">this page</text>
 <rect x="40" y="803" width="14" height="14" rx="4" fill="#ff9f0a"/><text x="62" y="816" font-size="16" font-weight="500" fill="#8e8e93">folder</text>
 <rect x="150" y="803" width="14" height="14" rx="4" fill="#ff453a"/><text x="172" y="816" font-size="16" font-weight="500" fill="#8e8e93">scene color</text>
-<rect x="370" y="803" width="14" height="14" rx="4" fill="#636366"/><text x="304" y="816" font-size="16" font-weight="500" fill="#8e8e93">file</text>
+<rect x="290" y="803" width="14" height="14" rx="4" fill="#636366"/><text x="304" y="816" font-size="16" font-weight="500" fill="#8e8e93">file</text>
 </g></svg>
