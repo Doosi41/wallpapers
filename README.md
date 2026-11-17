@@ -1,4 +1,4 @@
-<img src="assets/hero.svg" alt="Wallpapers — bikes, F1, cars and live wallpapers" width="100%">
+<img src="assets/hero.svg" alt="my wallpapers" width="100%">
 
 <p align="center">
   My personal wallpaper collection: sport bikes, Formula 1, supercars and a few dark portraits.<br>
