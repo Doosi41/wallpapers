@@ -35,4 +35,4 @@
 
 <br>
 
-<img src="assets/footer.svg" alt="Stay hungry. Stay foolish." width="100%">
+<img src="assets/footer.svg" alt="Talk is cheap. Show me the code. — Linus Torvalds" width="100%">
