@@ -1,0 +1,160 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>VSThemes wallpaper</title>
+<style>
+  @font-face{font-family:PT;src:url(Pixeltype.ttf)}
+  @font-face{font-family:FP;src:url(FreePixel.ttf)}
+  html,body{margin:0;height:100%;background:#000;overflow:hidden}
+  canvas{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%)}
+  video{display:none}
+</style>
+<canvas id="c" width="1920" height="1080"></canvas>
+<script>
+// Defaults taken from project.json of the Wallpaper Engine scene
+const CFG = {
+  h24: true,
+  city1: 'TYO', city2: 'NYC', tz1: 'Asia/Tokyo', tz2: 'America/New_York',
+  cd1: '2024-02-28', cd1name: 'Birthday', cd2: '2024-05-09', cd2name: 'Vacation',
+  showCountdowns: false, hideEyes: false, hideNumbers: false,
+  headers: { left: 'NIGHTLIFE', middle: 'EYES', right: 'CITY' },
+};
+const FONT_K = 4.12;            // font px per Wallpaper Engine "pointsize"
+const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const pad = (n, l = 2) => String(n).padStart(l, '0');
+const pick = a => a[Math.random() * a.length | 0];
+
+const cv = document.getElementById('c'), ctx = cv.getContext('2d');
+function fit() {
+  const s = Math.min(innerWidth / 1920, innerHeight / 1080);
+  cv.style.width = 1920 * s + 'px'; cv.style.height = 1080 * s + 'px';
+}
+addEventListener('resize', fit); fit();
+
+const vids = {};
+for (const k of ['left', 'middle', 'right']) {
+  const v = document.createElement('video');
+  v.src = k + '.mp4'; v.loop = true; v.muted = true; v.playsInline = true; v.autoplay = true;
+  document.body.appendChild(v); vids[k] = v;
+}
+const kick = () => Object.values(vids).forEach(v => v.paused && v.play().catch(() => {}));
+setInterval(kick, 2000);
+
+let objs = [], byId = {}, kids = {}, WORDS;
+let state = {};   // id -> dynamic text
+
+function clock(diffH = 0) {
+  const t = new Date(Date.now() + diffH * 3600000);
+  let h = t.getHours();
+  if (!CFG.h24) { h %= 12; if (!h) h = 12; }
+  return { h: pad(h), m: pad(t.getMinutes()), s: pad(t.getSeconds()), t };
+}
+function countdown(dateStr) {
+  const d = new Date(dateStr).getTime() - Date.now();
+  if (!(d > 0)) return 'COUNTDOWN EXPIRED';
+  const day = 864e5, w = Math.floor(d / day / 7), dd = Math.floor(d / day - w * 7);
+  return `${pad(w)}w ${pad(dd)}d ${pad(Math.floor(d % day / 36e5))}h ${pad(Math.floor(d % 36e5 / 6e4))}m ${pad(Math.floor(d % 6e4 / 1e3))}s`;
+}
+const lists = { log1: [], log2: [''], log3: [''] };
+function tickSlow() {   // once per second, like the original scripts
+  const c = clock(), t12 = (() => { let h = new Date().getHours() % 12 || 12; return pad(h) + ':' + c.m + ':' + c.s; })();
+  lists.log1.push(t12); if (lists.log1.length > 21) lists.log1.shift();
+  lists.log2.push(pick(WORDS.ids)); if (lists.log2.length > 21) lists.log2.shift();
+  lists.log3.push(pick(WORDS.tasks)); if (lists.log3.length > 21) lists.log3.shift();
+  state[591] = lists.log1.join('\n'); state[222] = lists.log2.join('\n'); state[231] = lists.log3.join('\n');
+  const w = WORDS.w, rw = () => [pick(w.arrayadj), pick(w.arraynouns), pick(w.arrayverb), pick(w.arrayadv), pick(w.arrayadj), pick(w.arraynouns), pick(w.arrayverb), pick(w.arrayadv), pick(w.arrayadj)].join('\n');
+  for (const id of [50, 81, 84, 91]) state[id] = rw();
+  for (const id of [126, 128, 130]) state[id] = Array.from({ length: 9 }, () => String(Math.random() * 1e8 | 0).padStart(8, '0')).join('\n');
+}
+function tickFast() {
+  const c = clock(), n = new Date();
+  state[566] = c.h; state[353] = c.m; state[355] = c.s;
+  const tz = z => Object.fromEntries(new Intl.DateTimeFormat('en-GB', { timeZone: z, hourCycle: CFG.h24 ? 'h23' : 'h12', hour: '2-digit', minute: '2-digit', second: '2-digit', day: '2-digit', month: 'long' }).formatToParts(new Date()).map(x => [x.type, x.value]));
+  const z1 = tz(CFG.tz1), z2 = tz(CFG.tz2);
+  state[637] = `${z1.hour}:${z1.minute}:${z1.second}`; state[668] = `${z2.hour}:${z2.minute}:${z2.second}`;
+  state[628] = z1.day; state[672] = z1.month; state[675] = z2.day; state[680] = z2.month;
+  state[510] = pad(n.getDate()); state[728] = MONTHS[n.getMonth()];
+  state[466] = countdown(CFG.cd1); state[495] = countdown(CFG.cd2);
+}
+
+// text overrides from settings
+function staticText(o) {
+  switch (o.tuser) {
+    case 'city1': return CFG.city1; case 'city2': return CFG.city2;
+    case 'countdown1name': return CFG.cd1name; case 'countdown2name': return CFG.cd2name;
+    case 'leftimagewindowheader': return CFG.headers.left;
+    case 'middleimagewindowheader': return CFG.headers.middle;
+    case 'rightimagewindowheader': return CFG.headers.right;
+  }
+  return o.text;
+}
+function isVisible(o) {
+  if (o.name === 'Countdown Window') return CFG.showCountdowns;
+  if (o.name === 'Words Window') return !CFG.showCountdowns;
+  if (o.vuser === 'hidenumberswindow') return !CFG.hideNumbers;
+  if (o.vuser === 'hideeyeswindow') return !CFG.hideEyes;
+  if (o.name === 'Media Player' || o.name === 'Album Cover') return false;   // no audio playing
+  if (o.name === 'Audio Bars') return false;
+  if (o.visible === false) return false;
+  return true;
+}
+// Color preset: base = borders/buttons, accent = title bars
+const SCHEME = { basecolor: [0.35, 0.85, 1.00], accentcolourdefault800080: [0.02, 0.45, 0.65] };
+const rgb = (c, a = 1) => `rgba(${c.map(x => Math.round(x * 255)).join(',')},${a})`;
+const ALIGN = { topleft: [0, 0], left: [0, -.5], right: [-1, -.5], center: [-.5, -.5] };
+const today = new Date().getDate();
+
+function render() {
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.clearRect(0, 0, 1920, 1080);
+  // roots are drawn in scene coordinates (y up); children inherit parent transform
+  const drawNode = (o, root) => {
+    if (!isVisible(o)) return;
+    ctx.save();
+    const p = o.origin || [0, 0], s = o.scale || [1, 1];
+    if (root) ctx.translate(p[0], 1080 - p[1]); else ctx.translate(p[0], -p[1]);
+    ctx.scale(s[0], s[1]);
+    const a = o.alpha === undefined ? 1 : Math.min(1, o.alpha);
+    if (o.id === 235 && byId[671]) drawNode(byId[671], false);   // calendar highlight sits under the digits
+    if (o.type === 'text') {
+      if (a > 0) {
+        const txt = state[o.id] ?? staticText(o);
+        const size = o.pt * FONT_K;
+        ctx.font = `${size}px ${o.font === 'Pixeltype.ttf' ? 'PT' : 'FP'}, sans-serif`;
+        ctx.fillStyle = rgb(SCHEME[o.cuser] || o.color || [1, 1, 1], a);
+        ctx.textBaseline = 'middle';
+        ctx.textAlign = o.ha;              // origin is the anchor point for the chosen alignment
+        const lines = String(txt).split('\n'), lh = size * 1.13, n = lines.length;
+        const y0 = o.va === 'top' ? 0 : -n * lh / 2;
+        lines.forEach((l, i) => ctx.fillText(l, 0, y0 + lh * (i + .5)));
+      }
+    } else if (a > 0) {
+      const al = ALIGN[o.align] || ALIGN.center, [w, h] = o.size, x = al[0] * w, y = al[1] * h;
+      ctx.globalAlpha = a;
+      if (o.type.startsWith('video')) {
+        const v = vids[o.type.split(':')[1]];
+        if (v.readyState >= 2) ctx.drawImage(v, x, y, w, h);
+      } else {
+        ctx.fillStyle = rgb(SCHEME[o.cuser] || o.color || [1, 1, 1]);
+        ctx.fillRect(x, y, w, h);
+      }
+    }
+    // calendar highlight: only today's tile is visible, drawn beneath the digits
+    for (const k of kids[o.id] || []) {
+      if (/^\d+$/.test(k.name) && k.parent === 671) { if (+k.name !== today) continue; drawNode({ ...k, visible: true }, false); continue; }
+      drawNode(k, false);
+    }
+    ctx.restore();
+  };
+  for (const o of objs) if (o.parent === undefined) drawNode(o, true);
+}
+
+(async () => {
+  [objs, WORDS] = await Promise.all([fetch('data.json').then(r => r.json()), fetch('words.json').then(r => r.json())]);
+  objs.forEach(o => { byId[o.id] = o; (kids[o.parent] ||= []).push(o); });
+  kids[235] = (kids[235] || []).filter(o => o.id !== 671);
+  await Promise.all([document.fonts.load('40px PT'), document.fonts.load('40px FP')]);
+  tickSlow(); tickFast(); setInterval(tickSlow, 1000); setInterval(tickFast, 250);
+  kick();
+  (function loop() { render(); requestAnimationFrame(loop); })();
+})();
+</script>

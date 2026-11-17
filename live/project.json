@@ -1,0 +1,272 @@
+{
+	"contentrating" : "Everyone",
+	"description" : "Options:\n- 24 & 12 hour time\n- Custom image upload\n- Custom colours\n- Date Countdown\n- Naming of some windows\n- Window toggling\n- Mild Interactivity\n\nNotes:\n- For time differences involving 15 and 30 minute values, use 0.25 and 0.50 respectively in time differences.\n- Countdown times are written in the format YYYY-MM-DD.\n- Recommended resolution: 1920 x 1080\n\n\nCredits:\nInspired by bemuse\nLeft GIF: Waiting 2.0 by Pixel Jeff\nMiddle GIF: The Boys Store \"YOU'VE GOT MAIL\" eyes asset\nRight GIF: Sorapoi",
+	"file" : "scene.json",
+	"general" : 
+	{
+		"properties" : 
+		{
+			"_24hourtime" : 
+			{
+				"index" : 5,
+				"order" : 105,
+				"text" : "24 Hour Time",
+				"type" : "bool",
+				"value" : true
+			},
+			"accentcolourdefault800080" : 
+			{
+				"index" : 9,
+				"order" : 109,
+				"text" : "Accent Colour [Default #800080]",
+				"type" : "color",
+				"value" : "0.5019607843137255 0 0.5019607843137255"
+			},
+			"backgroundcolour" : 
+			{
+				"index" : 11,
+				"order" : 111,
+				"text" : "Background Colour [Default #000000]",
+				"type" : "color",
+				"value" : "0 0 0"
+			},
+			"basecolor" : 
+			{
+				"index" : 10,
+				"order" : 110,
+				"text" : "Base Colour [Default #FE19FF]",
+				"type" : "color",
+				"value" : "0.996078431372549 0.09803921568627451 1"
+			},
+			"city1" : 
+			{
+				"index" : 2,
+				"order" : 102,
+				"text" : "City 1",
+				"type" : "textinput",
+				"value" : "ALA"
+			},
+			"city2" : 
+			{
+				"index" : 4,
+				"order" : 104,
+				"text" : "City 2",
+				"type" : "textinput",
+				"value" : "AST"
+			},
+			"coloursettings" : 
+			{
+				"index" : 6,
+				"order" : 106,
+				"text" : "<br></br><u><h4>Colour Settings:</h4></u></h5>",
+				"type" : "text",
+				"value" : false
+			},
+			"countdown1" : 
+			{
+				"index" : 26,
+				"order" : 126,
+				"text" : "Countdown 1",
+				"type" : "textinput",
+				"value" : "2024-02-28"
+			},
+			"countdown1name" : 
+			{
+				"index" : 25,
+				"order" : 125,
+				"text" : "Countdown 1 Name",
+				"type" : "textinput",
+				"value" : "Birthday"
+			},
+			"countdown2" : 
+			{
+				"index" : 28,
+				"order" : 128,
+				"text" : "Countdown 2",
+				"type" : "textinput",
+				"value" : "2024-05-09"
+			},
+			"countdown2name" : 
+			{
+				"index" : 27,
+				"order" : 127,
+				"text" : "Countdown  2 Name",
+				"type" : "textinput",
+				"value" : "Vacation"
+			},
+			"countdownsettings" : 
+			{
+				"index" : 23,
+				"order" : 123,
+				"text" : "<br></br><u><h4>Countdown Settings:</h4></u>",
+				"type" : "text",
+				"value" : false
+			},
+			"customimageleft" : 
+			{
+				"index" : 14,
+				"order" : 114,
+				"text" : "Left Custom Image",
+				"type" : "scenetexture",
+				"value" : ""
+			},
+			"customimagemiddle" : 
+			{
+				"index" : 15,
+				"order" : 115,
+				"text" : "Middle Custom Image",
+				"type" : "scenetexture",
+				"value" : ""
+			},
+			"customimageright" : 
+			{
+				"index" : 16,
+				"order" : 116,
+				"text" : "Right Custom Image",
+				"type" : "scenetexture",
+				"value" : ""
+			},
+			"disablealbumtint" : 
+			{
+				"index" : 8,
+				"order" : 108,
+				"text" : "Disable Album Tint",
+				"type" : "bool",
+				"value" : false
+			},
+			"hideeyeswindow" : 
+			{
+				"index" : 19,
+				"order" : 119,
+				"text" : "Hide Eyes Window",
+				"type" : "bool",
+				"value" : false
+			},
+			"hidenumberswindow" : 
+			{
+				"index" : 18,
+				"order" : 118,
+				"text" : "Hide Numbers Window",
+				"type" : "bool",
+				"value" : false
+			},
+			"imagesettings" : 
+			{
+				"index" : 13,
+				"order" : 113,
+				"text" : "<br></br><u><h4>Image Settings:</h4></u>",
+				"type" : "text",
+				"value" : false
+			},
+			"leftimagewindowheader" : 
+			{
+				"index" : 20,
+				"order" : 120,
+				"text" : "Left Image Window Header",
+				"type" : "textinput",
+				"value" : "NIGHTLIFE"
+			},
+			"middleimagewindowheader" : 
+			{
+				"index" : 21,
+				"order" : 121,
+				"text" : "Middle Image Window Header",
+				"type" : "textinput",
+				"value" : "EYES"
+			},
+			"middlewindowtint" : 
+			{
+				"index" : 7,
+				"order" : 107,
+				"text" : "Middle Window Tint",
+				"type" : "bool",
+				"value" : true
+			},
+			"replacewordswithcountdowns" : 
+			{
+				"index" : 24,
+				"order" : 124,
+				"text" : "Replace 'Words' with 'Countdowns'",
+				"type" : "bool",
+				"value" : false
+			},
+			"rightimagewindowheader" : 
+			{
+				"index" : 22,
+				"order" : 122,
+				"text" : "Right Image Window Header",
+				"type" : "textinput",
+				"value" : "CITY"
+			},
+			"schemecolor" : 
+			{
+				"index" : 0,
+				"order" : 100,
+				"text" : "ui_browse_properties_scheme_color",
+				"type" : "color",
+				"value" : "0 0 0"
+			},
+			"textcolourdefaultffffff" : 
+			{
+				"index" : 12,
+				"order" : 112,
+				"text" : "Text Colour [Default #FFFFFF]",
+				"type" : "color",
+				"value" : "1 1 1"
+			},
+			"thankyouforusingmywallpaper" : 
+			{
+				"index" : 29,
+				"order" : 129,
+				"text" : "<br></br><i><h4>Thank you for using my wallpaper!</h4></i>",
+				"type" : "text",
+				"value" : false
+			},
+			"timedifference1" : 
+			{
+				"index" : 1,
+				"order" : 101,
+				"text" : "Time Difference 1",
+				"type" : "textinput",
+				"value" : "0"
+			},
+			"timedifference2" : 
+			{
+				"index" : 3,
+				"order" : 103,
+				"text" : "Time Difference 2",
+				"type" : "textinput",
+				"value" : "0"
+			},
+			"timesettings" : 
+			{
+				"index" : 0,
+				"order" : 100,
+				"text" : "<u><h4>Time Settings:</h4></u>",
+				"type" : "text",
+				"value" : false
+			},
+			"windowsettings" : 
+			{
+				"index" : 17,
+				"order" : 117,
+				"text" : "<br></br><u><h4>Window Settings:</h4></u>",
+				"type" : "text",
+				"value" : false
+			}
+		},
+		"supportsaudioprocessing" : true,
+		"supportsvideo" : true,
+		"supportsvideoflags" : 3
+	},
+	"preview" : "preview.gif",
+	"ratingsex" : "none",
+	"ratingviolence" : "none",
+	"tags" : [ "Pixel art" ],
+	"title" : "Pixels",
+	"type" : "scene",
+	"version" : 15,
+	"visibility" : "public",
+	"workshopid" : "3122339805",
+	"workshopurl" : "steam://url/CommunityFilePage/3122339805"
+}
